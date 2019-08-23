@@ -142,6 +142,13 @@ function seedLocations(db, users = []) {
       .insert(users)
   }
 
+  function makePinballFixtures() {
+    const testUsers = makeUsersArray();
+    const testLocations = makeLocationsArray();
+    const testMachines = makeMachinesArray(users, locations);
+    const testScores = makeScoresArray(users, machines);
+    return { testUsers, testLocations, testMachines, testScores };
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE 
