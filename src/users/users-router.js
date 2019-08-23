@@ -1,48 +1,61 @@
-const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
-const xss = require("xss");
-const bcrypt = require("bcryptjs");
+const express = require("express");
+const path = require("path");
+const UsersService = require("./users-service");
 
-const UsersService = {
-  hasUserWithUserName(db, user_name) {
-    return db("pinball_users")
-      .where({ user_name })
-      .first()
-      .then(user => !!user);
-  },
-  insertUser(db, newUser) {
-    return db
-      .insert(newUser)
-      .into("pinball_users")
-      .returning("*")
-      .then(([user]) => user);
-  },
-  validatePassword(password) {
-    if (password.length < 8) {
-      return "Password be longer than 8 characters";
-    }
-    if (password.length > 72) {
-      return "Password be less than 72 characters";
-    }
-    if (password.startsWith(" ") || password.endsWith(" ")) {
-      return "Password must not start or end with empty spaces";
-    }
-    if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
-      return "Password must contain 1 upper case, lower case, number and special character";
-    }
-    return null;
-  },
-  hashPassword(password) {
-    return bcrypt.hash(password, 12);
-  },
-  serializeUser(user) {
-    return {
-      id: user.id,
-      full_name: xss(user.user_first_name),
-      user_name: xss(user.user_last_name),
-      nickname: xss(user.user_nick_name),
-      date_created: new Date(user.date_created)
-    };
-  }
-};
+const usersRouter = express.Router();
+const jsonBodyParser = express.json();
 
-module.exports = UsersService;
+usersRouter.post("/", jsonBodyParser, (req, res, next) => {
+  const {
+    user_password,
+    user_first_name,
+    user_last_name,
+    user_nick_name,
+    user_email
+  } = req.body;
+
+  for (const field of [
+    "user_password",
+    "useruser_first_name_name",
+    "user_last_name",
+    "user_nick_name",
+    "user_email"
+  ])
+    if (!req.body[field])
+      return res.status(400).json({
+        error: `Missing '${field}' in request body`
+      });
+
+  const passwordError = UsersService.validatePassword(password);
+
+  if (passwordError) return res.status(400).json({ error: passwordError });
+
+  UsersService.hasUserWithUserName(req.app.get("db"), user_name)
+    .then(hasUserWithUserName => {
+      if (hasUserWithUserName)
+        return res.status(400).json({ error: `Username already taken` });
+
+      return UsersService.hashPassword(password).then(hashedPassword => {
+        const newUser = {
+          user_password,
+          password: hashedPassword,
+          user_first_name,
+          user_last_name,
+          user_nick_name,
+          user_email
+        };
+
+        return UsersService.insertUser(req.app.get("db"), newUser).then(
+          user => {
+            res
+              .status(201)
+              .location(path.posix.join(req.originalUrl, `/${user.id}`))
+              .json(UsersService.serializeUser(user));
+          }
+        );
+      });
+    })
+    .catch(next);
+});
+
+module.exports = usersRouter;
