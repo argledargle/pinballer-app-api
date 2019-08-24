@@ -5,11 +5,14 @@ const express = require('express');
 const app = express('./app');
 const cors = require('cors');
 const {CLIENT_ORIGIN} = require('./config');
+// const LocationsService= require('./locations/locations-service')
 
 const db = knex({
   client: 'pg',
   connection: CLIENT_ORIGIN,
 })
+
+// console.log(LocationsService.getAllLocations())
 
 app.use(
     cors({

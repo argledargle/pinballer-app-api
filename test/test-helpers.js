@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 function makeUsersArray() {
   return [
     {
-      user_id: 1,
+      user_id: 11,
       user_first_name: "Alex",
       user_last_name: "Peter",
       user_nick_name: "Argledargle",
@@ -12,7 +12,7 @@ function makeUsersArray() {
       user_email: "noreply@gmail.com"
     },
     {
-      user_id: 2,
+      user_id: 12,
       user_first_name: "Georgia",
       user_last_name: "Rockwell",
       user_nick_name: "Geo",
@@ -20,7 +20,7 @@ function makeUsersArray() {
       user_email: "noreply@ge.com"
     },
     {
-      user_id: 3,
+      user_id: 13,
       user_first_name: "Matt",
       user_last_name: "Schaladawieler",
       user_nick_name: "Matty Bombatty",
@@ -28,7 +28,7 @@ function makeUsersArray() {
       user_email: "noreply@nissan.com"
     },
     {
-      user_id: 4,
+      user_id: 14,
       user_first_name: "Nina",
       user_last_name: "Morales",
       user_nick_name: "La Nina",
@@ -41,22 +41,22 @@ function makeUsersArray() {
 function makeLocationsArray() {
   return [
     {
-      location_id: 1,
+      location_id: 11,
       location_address: "2800 N. Booth St.",
       location_name: "Around the corner"
     },
     {
-      location_id: 2,
+      location_id: 12,
       location_address: "615 E Brady St, Milwaukee, WI 53202",
       location_name: "Up Down"
     },
     {
-      location_id: 3,
+      location_id: 13,
       location_address: "722 E Burleigh St, Milwaukee, WI 53212",
       location_name: "Art Bar"
     },
     {
-      location_id: 4,
+      location_id: 14,
       location_address: "1032 E Center St, Milwaukee, WI 53212",
       location_name: "The Uptowner"
     }
@@ -91,28 +91,28 @@ function makeMachinesArray(testUsers, testLocations) {
 function makeScoresArray(testUsers, testMachines) {
   return [
     {
-      score_id: 1,
+      score_id: 11,
       score_value: 2045640,
       user_id: testUsers[0].user_id,
       machine_id: testMachines[0].machine_id,
       score_date: "2019-04-15 00:00:00"
     },
     {
-      score_id: 2,
+      score_id: 12,
       score_value: 3004564,
       user_id: testUsers[1].user_id,
       machine_id: testMachines[1].machine_id,
       score_date: "2019-03-14 00:00:00"
     },
     {
-      score_id: 3,
+      score_id: 13,
       score_value: 5045640,
       user_id: testUsers[2].user_id,
       machine_id: testMachines[2].machine_id,
       score_date: "2019-04-15 00:00:00"
     },
     {
-      score_id: 4,
+      score_id: 14,
       score_value: 45445654,
       user_id: testUsers[3].user_id,
       machine_id: testMachines[3].machine_id,
@@ -167,5 +167,6 @@ module.exports = {
   makeMachinesArray,
   makeScoresArray,
   makePinballFixtures,
-  cleanTables
+  cleanTables,
+  seedUsers
 };

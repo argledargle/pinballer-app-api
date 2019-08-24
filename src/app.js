@@ -15,6 +15,10 @@ app.use(morgan(morganOption));
 app.use(cors());
 app.use(helmet());
 
+app.get('/articles', (req, res, next) => {
+     res.send('All articles')
+   })
+
 app.use('/api/users', usersRouter)
 
 app.get("/", (req, res) => {
