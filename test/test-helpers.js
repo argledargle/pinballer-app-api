@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 function makeUsersArray() {
   return [
     {
-      user_id: 11,
+      user_id: 1,
       user_first_name: "Alex",
       user_last_name: "Peter",
       user_nick_name: "Argledargle",
@@ -12,7 +12,7 @@ function makeUsersArray() {
       user_email: "noreply@gmail.com"
     },
     {
-      user_id: 12,
+      user_id: 2,
       user_first_name: "Georgia",
       user_last_name: "Rockwell",
       user_nick_name: "Geo",
@@ -20,7 +20,7 @@ function makeUsersArray() {
       user_email: "noreply@ge.com"
     },
     {
-      user_id: 13,
+      user_id: 3,
       user_first_name: "Matt",
       user_last_name: "Schaladawieler",
       user_nick_name: "Matty Bombatty",
@@ -28,7 +28,7 @@ function makeUsersArray() {
       user_email: "noreply@nissan.com"
     },
     {
-      user_id: 14,
+      user_id: 4,
       user_first_name: "Nina",
       user_last_name: "Morales",
       user_nick_name: "La Nina",
@@ -41,24 +41,19 @@ function makeUsersArray() {
 function makeLocationsArray() {
   return [
     {
-      location_id: 11,
-      location_address: "2800 N. Booth St.",
-      location_name: "Around the corner"
-    },
-    {
-      location_id: 12,
+      location_name: "Up Down",
       location_address: "615 E Brady St, Milwaukee, WI 53202",
-      location_name: "Up Down"
+      location_id: 1
     },
     {
-      location_id: 13,
+      location_name: "Art Bar",
       location_address: "722 E Burleigh St, Milwaukee, WI 53212",
-      location_name: "Art Bar"
+      location_id: 2
     },
     {
-      location_id: 14,
+      location_name: "The Uptowner",
       location_address: "1032 E Center St, Milwaukee, WI 53212",
-      location_name: "The Uptowner"
+      location_id: 3
     }
   ];
 }

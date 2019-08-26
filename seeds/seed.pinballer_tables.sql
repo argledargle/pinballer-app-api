@@ -18,17 +18,17 @@ RESTART IDENTITY CASCADE;
         (3, 'Medieval Madness', 3);
 
     INSERT INTO pinballer_users
-        (user_id, user_fist_name, user_last_name, user_nick_name, user_email, user_password)
+        (pinballer_user_id, user_first_name, user_last_name, user_nick_name, user_email, user_password)
     VALUES
         (1, 'Alex', 'Peter', 'Argledargle', 'apyells@gmail.com', 'password1'),
         (2, 'Matt', 'Schalawadlier', 'Matty Bombatty', 'noreply@yahoo.com', 'password2'),
         (3, 'Nina', 'Morales', 'La Nina', 'noreply@microsoft.com', 'password3');
 
     INSERT INTO pinballer_scores
-        (score_id, score_value, user_id, machine_id, score_date)
+        (score_id, score_value, pinballer_user_id, machine_id, score_date)
     VALUES
-        (1, 30120460, 1, 1, 8/23/2019),
-        (2, 16527380, 2, 3, 7/16/2019),
-        (3, 4135040, 3, 2, 4/15/2019);
+        (1, 30120460, 1, 1, '8/23/2019'),
+        (2, 16527380, 2, 3, '7/16/2019'),
+        (3, 4135040, 3, 2, '4/15/2019');
 
     COMMIT;

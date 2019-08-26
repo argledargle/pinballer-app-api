@@ -3,23 +3,30 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
-const { NODE_ENV } = require("./config")
-const usersRouter = require('./users/users-router')
+const { NODE_ENV } = require("./config");
+const usersRouter = require("./users/users-router");
+const locationsRouter = require("./locations/locations-router");
 
 const app = express();
 
-const morganOption = (NODE_ENV === 'production') ? "tiny" : "common";
+const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
 
 app.use(cors());
 app.use(helmet());
 
-app.get('/articles', (req, res, next) => {
-     res.send('All articles')
-   })
+app.use("/locations", locationsRouter);
 
-app.use('/api/users', usersRouter)
+app.get("/articles", (req, res, next) => {
+  res.send("All articles");
+});
+
+app.get("/api/*", (req, res) => {
+  res.json({ ok: true });
+});
+
+app.use("/api/users", usersRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
