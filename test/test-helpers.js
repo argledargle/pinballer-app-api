@@ -41,11 +41,6 @@ function makeUsersArray() {
 function makeLocationsArray() {
   return [
     {
-      location_name: "Up Down",
-      location_address: "615 E Brady St, Milwaukee, WI 53202",
-      location_id: 1
-    },
-    {
       location_name: "Art Bar",
       location_address: "722 E Burleigh St, Milwaukee, WI 53212",
       location_id: 2
@@ -54,6 +49,11 @@ function makeLocationsArray() {
       location_name: "The Uptowner",
       location_address: "1032 E Center St, Milwaukee, WI 53212",
       location_id: 3
+    },
+    {
+      location_name: "Up Down",
+      location_address: "615 E Brady St, Milwaukee, WI 53202",
+      location_id: 1
     }
   ];
 }

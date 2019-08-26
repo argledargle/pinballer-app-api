@@ -4,5 +4,6 @@ module.exports = {
   DB_URL:
     process.env.DB_URL || "postgresql://postgres:aRp3t3r12@localhost/pinballer",
   JWT_SECRET: process.env.JWT_SECRET || "change-this-secret",
-  CLIENT_ORIGIN: process.env.DB_URL || "postgresql://postgres:aRp3t3r12@localhost/pinballer"
+  CLIENT_ORIGIN: process.env.DB_URL || "postgresql://postgres:aRp3t3r12@localhost/pinballer-test"
+  //remember to change CLIENT_ORIGIN back to the pinballer database
 };
