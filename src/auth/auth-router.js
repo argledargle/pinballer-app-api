@@ -5,42 +5,42 @@ const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
 authRouter.post("/login", jsonBodyParser, (req, res, next) => {
-  const { user_name, password } = req.body;
-  const loginUser = { user_name, password };
+  const { user_nick_name, user_password } = req.body;
+  const loginUser = { user_nick_name, user_password };
 
   for (const [key, value] of Object.entries(loginUser))
     if (value == null)
       return res.status(400).json({
         error: `Missing '${key}' in request body`
       });
-  AuthService.getUserWithUserName(req.app.get("db"), loginUser.user_name)
+  AuthService.getUserWithUserName(req.app.get("db"), loginUser.user_nick_name)
     .then(dbUser => {
       if (!dbUser)
         return res.status(400).json({
-          error: "Incorrect user_name or password"
+          error: "Incorrect user_nick_name or user_password"
         });
 
-      it(`responds 400 'invalid user_name or password' when bad password`, () => {
+      it(`responds 400 'invalid user_nick_name or user_password' when bad user_password`, () => {
         const userInvalidPass = {
-          user_name: testUser.user_name,
-          password: "incorrect"
+          user_nick_name: testUser.user_nick_name,
+          user_password: "incorrect"
         };
         return supertest(app)
           .post("/api/auth/login")
           .send(userInvalidPass)
-          .expect(400, { error: `Incorrect user_name or password` });
+          .expect(400, { error: `Incorrect user_nick_name or user_password` });
       });
 
       return AuthService.comparePasswords(
-        loginUser.password,
-        dbUser.password
+        loginUser.user_password,
+        dbUser.user_password
       ).then(compareMatch => {
         if (!compareMatch)
           return res.status(400).json({
-            error: "Incorrect user_name or password"
+            error: "Incorrect user_nick_name or user_password"
           });
 
-        const sub = dbUser.user_name;
+        const sub = dbUser.user_nick_name;
         const payload = { user_id: dbUser.id };
         res.send({
           authToken: AuthService.createJwt(sub, payload)

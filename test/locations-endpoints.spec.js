@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.only("Locations Endpoints", function() {
+describe("Locations Endpoints", function() {
   let db;
 
   before("make knex instance", () => {
