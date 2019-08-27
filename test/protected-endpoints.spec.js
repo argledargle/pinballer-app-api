@@ -28,4 +28,9 @@ describe("Locations Endpoints", function() {
       testScores
     )
   );
+
+  //THERE ARE ONLY A FEW PROTECTED ENDPOINTS:
+  //POST scores (any user can do this)
+  //admin edit/remove player profiles
+  //admin edit/remove locations
 });

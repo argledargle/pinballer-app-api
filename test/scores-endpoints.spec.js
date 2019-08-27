@@ -20,7 +20,7 @@ describe("Scores endpoints", function() {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  it("GET /scores/:machine_id responds with 200 and the top 3 scores for that machine", () => {
+  it("GET /api/scores/:machine_id responds with 200 and the top 3 scores for that machine", () => {
     before("seed all tables", () =>
       helpers.seedAllTables(
         db,
@@ -31,13 +31,13 @@ describe("Scores endpoints", function() {
       )
     );
     return supertest(app)
-      .get("/scores/machine/1")
+      .get("/api/scores/machine/1")
       .expect(200);
   });
-  it("GET /scores/:machine_id responds with 404 and `machine doesn't exist` if machine doesn't exist", () => {
+  it("GET api/scores/:machine_id responds with 404 and `machine does not exist` if machine does not exist", () => {
     const machineId = 1234567890;
     return supertest(app)
-      .get(`/scores/machine/${machineId}`)
-      .expect(404, { error: "machine doesn't exist" });
+      .get(`/api/scores/machine/${machineId}`)
+      .expect(404, { error: `machine does not exist` });
   });
 });

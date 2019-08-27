@@ -42,9 +42,9 @@ describe("Locations Endpoints", function() {
     return db.into("pinballer_locations").insert(testLocations);
   });
 
-  it("GET /locations responds with 200 and all of the locations", () => {
+  it("GET /api/locations responds with 200 and all of the locations", () => {
     return supertest(app)
-      .get("/locations")
+      .get("/api/locations")
       .expect(200, testLocations);
   });
 });

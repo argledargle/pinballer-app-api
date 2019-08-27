@@ -22,10 +22,6 @@ app.use("/api/locations", locationsRouter);
 app.use("/api/scores", scoresRouter)
 app.use("/api/auth", authRouter)
 
-app.get("/articles", (req, res, next) => {
-  res.send("All articles");
-});
-
 app.get("/api/*", (req, res) => {
   res.json({ ok: true });
 });
