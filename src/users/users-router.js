@@ -16,7 +16,7 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
 
   for (const field of [
     "user_password",
-    "useruser_first_name_name",
+    "user_first_name",
     "user_last_name",
     "user_nick_name",
     "user_email"
@@ -26,19 +26,19 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
         error: `Missing '${field}' in request body`
       });
 
-  const passwordError = UsersService.validatePassword(password);
+  const passwordError = UsersService.validatePassword(user_password);
 
   if (passwordError) return res.status(400).json({ error: passwordError });
 
-  UsersService.hasUserWithUserName(req.app.get("db"), user_name)
+  UsersService.hasUserWithUserName(req.app.get("db"), user_nick_name)
     .then(hasUserWithUserName => {
       if (hasUserWithUserName)
-        return res.status(400).json({ error: `Username already taken` });
+        return res.status(400).json({ error: `Nickname already taken` });
 
-      return UsersService.hashPassword(password).then(hashedPassword => {
+      return UsersService.hashPassword(user_password).then(hashedPassword => {
         const newUser = {
           user_password,
-          password: hashedPassword,
+          user_password: hashedPassword,
           user_first_name,
           user_last_name,
           user_nick_name,

@@ -34,6 +34,17 @@ describe("Auth Endpoints", function() {
         user_password: testUser.user_password
       };
 
+      it(`responds 400 'invalid user_nick_name or user_password' when bad user_password`, () => {
+        const userInvalidPass = {
+          user_nick_name: testUser.user_nick_name,
+          user_password: "incorrect"
+        };
+        return supertest(app)
+          .post("/api/auth/login")
+          .send(userInvalidPass)
+          .expect(400, { error: `Incorrect user_nick_name or user_password` });
+      });
+
       it(`responds with 400 required error when '${field}' is missing`, () => {
         delete loginAttemptBody[field];
         return supertest(app)
