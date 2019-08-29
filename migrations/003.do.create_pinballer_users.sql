@@ -13,6 +13,8 @@ IF NOT EXISTS pinballer_users
 (255) NOT NULL,
 	user_password varchar
 (255) NOT NULL,
+	admin_access bool NOT NULL DEFAULT false,
+	
 	CONSTRAINT pinballer_users_pk PRIMARY KEY
 (pinballer_user_id)
 );
