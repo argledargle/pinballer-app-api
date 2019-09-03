@@ -21,16 +21,16 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
           error: "Incorrect user_nick_name or user_password"
         });
 
-      // it(`responds 400 'invalid user_nick_name or user_password' when bad user_password`, () => {
-      //   const userInvalidPass = {
-      //     user_nick_name: testUser.user_nick_name,
-      //     user_password: "incorrect"
-      //   };
-      //   return supertest(app)
-      //     .post("/api/auth/login")
-      //     .send(userInvalidPass)
-      //     .expect(400, { error: `Incorrect user_nick_name or user_password` });
-      // });
+      it(`responds 400 'invalid user_nick_name or user_password' when bad user_password`, () => {
+        const userInvalidPass = {
+          user_nick_name: testUser.user_nick_name,
+          user_password: "incorrect"
+        };
+        return supertest(app)
+          .post("/api/auth/login")
+          .send(userInvalidPass)
+          .expect(400, { error: `Incorrect user_nick_name or user_password` });
+      });
 
       return AuthService.comparePasswords(
         loginUser.user_password,

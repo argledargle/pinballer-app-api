@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe("Auth Endpoints", function() {
+describe.only("Auth Endpoints", function() {
   let db;
 
   const { testUsers } = helpers.makePinballFixtures();
@@ -60,7 +60,7 @@ describe("Auth Endpoints", function() {
           user_password: testUser.user_password
         };
         const expectedToken = jwt.sign(
-          { user_id: testUser.user_id }, // payload
+          { user_id: testUser.pinballer_user_id }, // payload
           process.env.JWT_SECRET,
           {
             subject: testUser.user_nick_name,
@@ -83,7 +83,7 @@ describe("Auth Endpoints", function() {
 
     it(`responds 200 and JWT auth token using secret`, () => {
       const expectedToken = jwt.sign(
-        { user_id: testUser.user_id },
+        { user_id: testUser.pinballer_user_id },
         process.env.JWT_SECRET,
         {
           subject: testUser.user_nick_name,
