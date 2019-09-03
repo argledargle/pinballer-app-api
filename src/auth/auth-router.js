@@ -5,6 +5,10 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
+//this file does 2 things--
+//it allows a user to login
+//it keeps a user's token refreshed
+
 authRouter.post("/login", jsonBodyParser, (req, res, next) => {
   const { user_nick_name, user_password } = req.body;
   const loginUser = { user_nick_name, user_password };
@@ -21,17 +25,6 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
           error: "Incorrect user_nick_name or user_password"
         });
 
-      it(`responds 400 'invalid user_nick_name or user_password' when bad user_password`, () => {
-        const userInvalidPass = {
-          user_nick_name: testUser.user_nick_name,
-          user_password: "incorrect"
-        };
-        return supertest(app)
-          .post("/api/auth/login")
-          .send(userInvalidPass)
-          .expect(400, { error: `Incorrect user_nick_name or user_password` });
-      });
-
       return AuthService.comparePasswords(
         loginUser.user_password,
         dbUser.user_password
@@ -42,15 +35,14 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
           });
 
         const sub = dbUser.user_nick_name;
-        const payload = { user_id: dbUser.id };
-        const nickname = loginUser.user_nick_name
-        console.log(nickname);
-        res.send({
-          authToken: AuthService.createJwt(sub, payload),
-          is_admin: AuthService.getAdminInfo(req.app.get("db"), nickname)
-          //this is where the logic described below goes
-          // add logic to send whether or not they're an admin (this is
-          // in the knex database)
+        const payload = { user_id: dbUser.user_nick_name };
+        const nickname = loginUser.user_nick_name;
+        AuthService.getAdminInfo(req.app.get("db"), nickname)
+        .then(isAdmin => {
+            res.send({
+                authToken: AuthService.createJwt(sub, payload),
+                is_admin: isAdmin
+            });
         });
       });
     })

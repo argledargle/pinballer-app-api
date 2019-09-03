@@ -33,7 +33,7 @@ const AuthService = {
     return db
       .select("admin_access")
       .from("pinballer_users")
-      .where("pinballer_user_id", nickname);
+      .where("user_nick_name", nickname);
   }
 };
 
