@@ -64,7 +64,7 @@ describe("Users endpoints", function() {
           user_last_name: "test user_last_name",
           user_email: "test user_email",
           user_password: "test user_password",
-          user_nick_name: "test user_nick_name"
+          user_nick_name: "test user_nick_name",
         };
         return supertest(app)
           .post("/api/users")

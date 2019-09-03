@@ -42,7 +42,7 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
           user_first_name,
           user_last_name,
           user_nick_name,
-          user_email
+          user_email,
         };
 
         return UsersService.insertUser(req.app.get("db"), newUser).then(

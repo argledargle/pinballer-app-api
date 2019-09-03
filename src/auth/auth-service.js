@@ -27,6 +27,13 @@ const AuthService = {
     return Buffer.from(token, "base64")
       .toString()
       .split(":");
+  },
+
+  getAdminInfo(db, nickname) {
+    return db
+      .select("admin_access")
+      .from("pinballer_users")
+      .where("pinballer_user_id", nickname);
   }
 };
 

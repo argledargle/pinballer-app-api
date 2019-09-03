@@ -39,6 +39,13 @@ const ScoresService = {
       .from("pinballer_machines")
       .where("pinballer_machines.machine_id", machine_id)
       .first();
+  },
+
+  postScore(db, newScore) {
+    return db
+      .insert(newScore)
+      .into("pinballer_scores")
+      .returning("*");
   }
 };
 

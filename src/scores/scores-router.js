@@ -13,6 +13,29 @@ scoresRouter
         res.json(scores);
       })
       .catch(next);
+  })
+  //post machine/:machine_id should allow a user to post a new score using the body
+  //of the req object
+  .post((req, res, next) => {
+    // console.log("req.query", req.query);
+    const { machine_id, pinballer_user_id, score_value } = req.query;
+    const newScore = { machine_id, pinballer_user_id, score_value };
+    // console.log("new score", newScore);
+
+    for (const [key, value] of Object.entries(newScore)) {
+      // console.log("value", value);
+      // console.log("key", key);
+      if (value == null)
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` }
+        });
+    }
+
+    ScoresService.postScore(req.app.get("db"), newScore)
+      .then(scores => {
+        res.status(201).json(scores);
+      })
+      .catch(next);
   });
 
 async function checkMachineExists(req, res, next) {

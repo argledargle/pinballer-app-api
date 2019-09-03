@@ -43,8 +43,14 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
 
         const sub = dbUser.user_nick_name;
         const payload = { user_id: dbUser.id };
+        const nickname = loginUser.user_nick_name
+        console.log(nickname);
         res.send({
-          authToken: AuthService.createJwt(sub, payload)
+          authToken: AuthService.createJwt(sub, payload),
+          is_admin: AuthService.getAdminInfo(req.app.get("db"), nickname)
+          //this is where the logic described below goes
+          // add logic to send whether or not they're an admin (this is
+          // in the knex database)
         });
       });
     })

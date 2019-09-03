@@ -20,6 +20,8 @@ describe("Locations Endpoints", function() {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
+  const testUsers = helpers.makePinballFixtures;
+
   testLocations = [
     {
       location_name: "Art Bar",
@@ -38,6 +40,11 @@ describe("Locations Endpoints", function() {
     }
   ];
 
+  newLocation = {
+    location_name: "The Gig",
+    location_address: "1132 E Wright St, Milwaukee, WI 53212"
+  };
+
   beforeEach("insert locations", () => {
     return db.into("pinballer_locations").insert(testLocations);
   });
@@ -47,4 +54,18 @@ describe("Locations Endpoints", function() {
       .get("/api/locations")
       .expect(200, testLocations);
   });
+
+  it("POST /api/locations responds with 200 and shows the location", () => {
+    return supertest(app)
+      .post("/api/locations")
+      .send(newLocation)
+      .expect(201, newLocation);
+  });
+
+  it("DELETE /api/locations/:location_id responds with 200 and deletes the location from the database", () => {
+    return supertest(app)
+    .delete("/api/locations/:location_id")
+    .send(newLocation)
+    .expect(204);
+  })
 });

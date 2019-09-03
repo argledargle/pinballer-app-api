@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 function makeUsersArray() {
-  return [
+  return (testUsers = [
     {
       pinballer_user_id: 1,
       user_first_name: "Alex",
@@ -35,7 +35,7 @@ function makeUsersArray() {
       user_password: "Password4",
       user_email: "noreply@wisc.gov"
     }
-  ];
+  ]);
 }
 
 function makeLocationsArray() {
@@ -160,15 +160,13 @@ function seedUsers(db, testUsers) {
     user_password: bcrypt.hashSync(user.user_password, 1)
     //I will need to undo this to account for hashed passwords
   }));
-  return db
-    .into("pinballer_users")
-    .insert(preppedUsers)
-    // .then(() =>
-    //   // update the auto sequence to stay in sync
-    //   db.raw(`SELECT setval('pinballer_users_id_seq', ?)`, [
-    //     testUsers[testUsers.length - 1].id
-    //   ])
-    // );
+  return db.into("pinballer_users").insert(preppedUsers);
+  // .then(() =>
+  //   // update the auto sequence to stay in sync
+  //   db.raw(`SELECT setval('pinballer_users_id_seq', ?)`, [
+  //     testUsers[testUsers.length - 1].id
+  //   ])
+  // );
 }
 
 function seedLocations(db, testLocations) {
@@ -188,6 +186,16 @@ function seedScores(db, testScores) {
 }
 
 function seedAllTables(db, testUsers, testLocations, testMachines, testScores) {
+  console.log(
+    "test machines",
+    testMachines,
+    "test users",
+    testUsers,
+    "test locations",
+    testLocations,
+    "test scores",
+    testScores
+  );
   seedUsers(db, testUsers)
     .then(seedLocations(db, testLocations))
     .then(seedMachines(db, testMachines))
@@ -199,6 +207,8 @@ function makePinballFixtures() {
   const testLocations = makeLocationsArray();
   const testMachines = makeMachinesArray(testLocations);
   const testScores = makeScoresArray(testUsers, testMachines);
+  // console.log(testMachines)
+
   // const testScoresForMachines = makeTestScoresForMachines(
   //   testScores,
   //   testUsers,
@@ -208,7 +218,7 @@ function makePinballFixtures() {
     testUsers,
     testLocations,
     testMachines,
-    testScores,
+    testScores
     // testScoresForMachines
   };
 }
@@ -225,13 +235,16 @@ function cleanTables(db) {
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_nick_name,
-    algorithm: "HS256"
-  });
+  const token = jwt.sign(
+    { pinballer_user_id: user.pinballer_user_id },
+    secret,
+    {
+      subject: user.user_nick_name,
+      algorithm: "HS256"
+    }
+  );
   return `Bearer ${token}`;
 }
-
 
 module.exports = {
   makeUsersArray,
