@@ -1,9 +1,8 @@
 const knex = require("knex");
-const bcrypt = require("bcryptjs");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.only("Scores endpoints", function() {
+describe("Scores endpoints", function() {
   let db;
 
   before("make knex instance", () => {
@@ -19,24 +18,6 @@ describe.only("Scores endpoints", function() {
   before("cleanup", () => helpers.cleanTables(db));
 
   afterEach("cleanup", () => helpers.cleanTables(db));
-  // beforeEach("seed all tables", () => {
-  //   // console.log(
-  //   //   helpers.seedAllTables(
-  //   //     // db,
-  //   //     // testUsers,
-  //   //     // testLocations,
-  //   //     // testMachines,
-  //   //     // testScores
-  //   //   )
-  //   // );
-  //   return helpers.seedAllTables(
-  //     db,
-  //     testUsers,
-  //     testLocations,
-  //     testMachines,
-  //     testScores
-  //   );
-  // });
 
   it("GET /api/scores/machine/:machine_id responds with 200 and the top 3 scores for that machine", () => {
     return supertest(app)
@@ -55,18 +36,20 @@ describe.only("Scores endpoints", function() {
     "POST /api/scores/:machine_id respond with 200 and the new score for that machine"
   ),
     () => {
-      const newScore = {
-        user_nick_name: "argledargle",
-        machine_name: "Mars Attacks!",
-        score_value: 30402034
-      };
+      const machine_id = 1;
+      const pinball_user_id = 1;
+      score_value = 23424;
       return supertest(app)
-        .post("/api/scores/machine/1")
+        .post(
+          `/api/scores/machine/1?machine_id=${machine_id}&pinballer_user_id=${pinball_user_id}&score_value=${score_value}`
+        )
         .send(newScore)
         .expect(200, {
-          user_nick_name: "argledargle",
-          machine_name: "Mars Attacks!",
-          score_value: 30402034
+          score_id: 1,
+          score_value: 23424,
+          pinballer_user_id: 1,
+          machine_id: 1,
+          score_date: now()
         });
     };
 });
