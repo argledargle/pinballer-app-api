@@ -66,6 +66,6 @@ describe("Locations Endpoints", function() {
     return supertest(app)
     .delete("/api/locations/:location_id")
     .send(newLocation)
-    .expect(204);
+    .expect(200);
   })
 });

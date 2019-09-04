@@ -32,6 +32,18 @@ scoresRouter
         res.status(201).json(scores);
       })
       .catch(next);
+  })
+
+  //this code below here should get the highest score for a user an all
+  //machines they have scores on
+  scoresRouter
+  .route("/user/:pinballer_user_id")
+  .get((req, res, next) => {
+    ScoresService.getScoresForPlayer(req.app.get("db"), req.params.pinballer_user_id)
+    .then(scores => {
+      res.json(scores);
+    })
+    .catch(next)
   });
 
 async function checkMachineExists(req, res, next) {

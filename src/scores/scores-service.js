@@ -46,6 +46,33 @@ const ScoresService = {
       .insert(newScore)
       .into("pinballer_scores")
       .returning("*");
+  },
+
+  getScoresForPlayer(db, pinballer_user_id) {
+    return db
+      .select(
+        "pinballer_users.pinballer_user_id",
+        "pinballer_users.user_nick_name",
+        "pinballer_scores.pinballer_user_id",
+        "pinballer_scores.score_value",
+        "pinballer_machines.machine_id",
+        "pinballer_machines.machine_name"
+      )
+      .from("pinballer_users")
+      .where("pinballer_users.pinballer_user_id", pinballer_user_id)
+      .leftJoin(
+        "pinballer_scores",
+        "pinballer_scores.pinballer_user_id",
+        "pinballer_users.pinballer_user_id"
+      )
+      .leftJoin(
+        "pinballer_machines",
+        "pinballer_machines.machine_id",
+        "pinballer_scores.machine_id"
+      )
+      .orderBy(
+        "pinballer_machines.machine_id"
+      );
   }
 };
 

@@ -19,7 +19,7 @@ describe("Locations Endpoints", function() {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  beforeEach("insert articles", () =>
+  beforeEach("seed", () =>
     helpers.seedAllTables(
       db,
       testUsers,

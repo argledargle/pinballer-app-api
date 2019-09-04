@@ -9,7 +9,8 @@ machinesRouter
   .route("/name/")
   .all(checkMachineExists)
   .get((req, res, next) => {
-    MachinesService.getMachine(req.app.get("db"), req.params.machine_name)
+    console.log("req", req.params);
+    MachinesService.getMachine(req.app.get("db"), req.query.machine_name)
       .then(machine => {
         res.json(machine);
       })
@@ -20,7 +21,7 @@ async function checkMachineExists(req, res, next) {
   try {
     const machine = await MachinesService.checkMachineExits(
       req.app.get("db"),
-      req.params.machine_name
+      req.query.machine_name
     );
 
     if (!machine)
