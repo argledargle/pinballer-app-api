@@ -71,8 +71,6 @@ describe("Scores endpoints", function() {
     before("seed machines table", () => {
         return db.into("pinballer_machines").insert(testMachines)
     })
-    console.log('testLocations', testLocations)
-    console.log('testMachines', testMachines)
     return supertest(app)
       .get("/api/machines/name/?machine_name=Metallica")
       .expect(200, {

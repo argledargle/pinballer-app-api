@@ -9,7 +9,8 @@ function makeUsersArray() {
       user_last_name: "Peter",
       user_nick_name: "Argledargle",
       user_password: "Password1",
-      user_email: "noreply@gmail.com"
+      user_email: "noreply@gmail.com",
+      admin_access: "true"
     },
     {
       pinballer_user_id: 2,
@@ -17,7 +18,8 @@ function makeUsersArray() {
       user_last_name: "Rockwell",
       user_nick_name: "Geo",
       user_password: "Password2",
-      user_email: "noreply@ge.com"
+      user_email: "noreply@ge.com",
+      admin_access: "false"
     },
     {
       pinballer_user_id: 3,
@@ -25,7 +27,8 @@ function makeUsersArray() {
       user_last_name: "Schaladawieler",
       user_nick_name: "Matty Bombatty",
       user_password: "Password3",
-      user_email: "noreply@nissan.com"
+      user_email: "noreply@nissan.com",
+      admin_access: "true"
     },
     {
       pinballer_user_id: 4,
@@ -33,7 +36,8 @@ function makeUsersArray() {
       user_last_name: "Morales",
       user_nick_name: "La Nina",
       user_password: "Password4",
-      user_email: "noreply@wisc.gov"
+      user_email: "noreply@wisc.gov",
+      admin_access: "false"
     }
   ]);
 }

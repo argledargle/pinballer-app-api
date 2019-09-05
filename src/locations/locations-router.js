@@ -60,21 +60,21 @@ locationsRouter
       .catch(next);
   })
 
-  .delete((req, res, next) => {
-    LocationsService.deleteMachineOnDeleteLocation(req.app.get("db"), req.params.location_id)
-      .then(numRowsAffected => {
-        LocationsService.deleteLocation(
-          req.app.get("db"),
-          req.params.location_id
-        )
-          .then(numRowsAffected => {
-            res.status(204).end();
-          })
+  // .delete((req, res, next) => {
+  //   LocationsService.deleteMachineOnDeleteLocation(req.app.get("db"), req.query.location_id)
+  //     .then( () => {
+  //       LocationsService.deleteLocation(
+  //         req.app.get("db"),
+  //         req.query.location_id
+  //       )
+  //         .then( () => {
+  //           res.status(204).end();
+  //         })
     
-          .catch(next);
-      })
+  //         .catch(next);
+  //     })
 
-      .catch(next);
+  //     .catch(next);
     // LocationsService.deleteMachineOnDeleteLocation(
     //   req.app.get("db"),
     //   req.params.location_id
@@ -84,6 +84,6 @@ locationsRouter
     // //   })
 
     //   .catch(next);
-  });
+  // });
 
 module.exports = locationsRouter;

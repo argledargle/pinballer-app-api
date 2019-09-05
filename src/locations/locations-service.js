@@ -15,19 +15,19 @@ const LocationsService = {
       .select("location_id");
   },
 
-  deleteLocation(db, location_id) {
-    return db
-      .where("location_id", location_id)
-      .from("pinballer_locations")
-      .delete();
-  },
+  // deleteLocation(db, location_id) {
+  //   return db
+  //     .from("pinballer_locations")
+  //     .where("location_id", location_id)
+  //     .delete();
+  // },
 
-  deleteMachineOnDeleteLocation(db, location_id) {
-    return db
-      .where("location_id", location_id)
-      .from("pinballer_machines")
-      .into("location_id", 0);
-  },
+  // deleteMachineOnDeleteLocation(db, location_id) {
+  //   return db
+  //     .from("pinballer_machines")
+  //     .where("pinballer_machines.location_id", location_id)
+  //     .into("location_id", 0);
+  // },
 
   insertLocation(db, newLocation) {
     return db

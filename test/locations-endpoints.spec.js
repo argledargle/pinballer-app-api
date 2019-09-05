@@ -61,11 +61,11 @@ describe("Locations Endpoints", function() {
       .send(newLocation)
       .expect(201, newLocation);
   });
-
-  it("DELETE /api/locations/:location_id responds with 200 and deletes the location from the database", () => {
-    return supertest(app)
-    .delete("/api/locations/:location_id")
-    .send(newLocation)
-    .expect(200);
-  })
+//this was descoped from the original project
+  // it("DELETE /api/locations/:location_id responds with 200 and deletes the location from the database", () => {
+  //   return supertest(app)
+  //   .delete("/api/locations/:location_id")
+  //   .send(newLocation)
+  //   .expect(200);
+  // })
 });
