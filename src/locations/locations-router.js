@@ -13,8 +13,10 @@ locationsRouter.route("/").get((req, res, next) => {
     .catch(next);
 });
 
+//this adds new locations
 locationsRouter.post("/", jsonBodyParser, (req, res, next) => {
   const { location_name, location_address } = req.body;
+  const newLocation = { location_name, location_address };
   for (const field of ["location_name", "location_address"])
     if (!req.body[field])
       return res.status(400).json({
@@ -44,46 +46,44 @@ locationsRouter.post("/", jsonBodyParser, (req, res, next) => {
     .catch(next);
 });
 
-locationsRouter
-  .route("/:location_id")
-  .all((req, res, next) => {
-    LocationsService.getById(req.app.get("db"), req.params.location_id)
-      .then(location => {
-        if (!location) {
-          return res.status(404).json({
-            error: { message: `Location doesn't exist` }
-          });
-        }
-        res.location = location;
-        next();
-      })
-      .catch(next);
-  })
+locationsRouter.route("/:location_id").all((req, res, next) => {
+  LocationsService.getById(req.app.get("db"), req.params.location_id)
+    .then(location => {
+      if (!location) {
+        return res.status(404).json({
+          error: { message: `Location doesn't exist` }
+        });
+      }
+      res.location = location;
+      next();
+    })
+    .catch(next);
+});
 
-  // .delete((req, res, next) => {
-  //   LocationsService.deleteMachineOnDeleteLocation(req.app.get("db"), req.query.location_id)
-  //     .then( () => {
-  //       LocationsService.deleteLocation(
-  //         req.app.get("db"),
-  //         req.query.location_id
-  //       )
-  //         .then( () => {
-  //           res.status(204).end();
-  //         })
-    
-  //         .catch(next);
-  //     })
+// .delete((req, res, next) => {
+//   LocationsService.deleteMachineOnDeleteLocation(req.app.get("db"), req.query.location_id)
+//     .then( () => {
+//       LocationsService.deleteLocation(
+//         req.app.get("db"),
+//         req.query.location_id
+//       )
+//         .then( () => {
+//           res.status(204).end();
+//         })
 
-  //     .catch(next);
-    // LocationsService.deleteMachineOnDeleteLocation(
-    //   req.app.get("db"),
-    //   req.params.location_id
-    // )
-    //   .then(numRowsAffected => {
-    //     res.status(204).end();
-    // //   })
+//         .catch(next);
+//     })
 
-    //   .catch(next);
-  // });
+//     .catch(next);
+// LocationsService.deleteMachineOnDeleteLocation(
+//   req.app.get("db"),
+//   req.params.location_id
+// )
+//   .then(numRowsAffected => {
+//     res.status(204).end();
+// //   })
+
+//   .catch(next);
+// });
 
 module.exports = locationsRouter;
