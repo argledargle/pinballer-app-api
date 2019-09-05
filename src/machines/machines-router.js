@@ -28,8 +28,6 @@ machinesRouter
 
     const { machine_name, location_id } = req.query;
 
-    console.log(req.query);
-
     const newMachine = {
       machine_name,
       location_id
@@ -44,7 +42,6 @@ machinesRouter
 
 async function checkMachineNotExist(req, res, next) {
   try {
-    console.log(req.query);
     const machine = await MachinesService.checkMachineExits(
       req.app.get("db"),
       req.query.machine_name

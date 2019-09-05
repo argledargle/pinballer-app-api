@@ -9,16 +9,16 @@ describe("Scores endpoints", function() {
     db = knex({
       client: "pg",
       connection: process.env.DB_URL
-    //   connection: process.env.TEST_DB_URL
+      //   connection: process.env.TEST_DB_URL
     });
     app.set("db", db);
   });
 
-   after("disconnect from db", () => db.destroy());
+  after("disconnect from db", () => db.destroy());
 
-//   before("cleanup", () => helpers.cleanTables(db));
+  //   before("cleanup", () => helpers.cleanTables(db));
 
-//   afterEach("cleanup", () => helpers.cleanTables(db));
+  //   afterEach("cleanup", () => helpers.cleanTables(db));
 
   const testLocations = [
     {
@@ -63,14 +63,14 @@ describe("Scores endpoints", function() {
 
   it("GET /api/machines/name/?machine_name=Metallica responds with 200 and the machine_id, machine_name and machine_location for that machine", () => {
     before("seed location table", () => {
-        return db.into("pinballer_locations").insert(testLocations)
-        // helpers
-        // .seedLocations(db, testLocations)
-        // .then(() => helpers.seedMachines(db, testMachines));
+      return db.into("pinballer_locations").insert(testLocations);
+      // helpers
+      // .seedLocations(db, testLocations)
+      // .then(() => helpers.seedMachines(db, testMachines));
     });
     before("seed machines table", () => {
-        return db.into("pinballer_machines").insert(testMachines)
-    })
+      return db.into("pinballer_machines").insert(testMachines);
+    });
     return supertest(app)
       .get("/api/machines/name/?machine_name=Metallica")
       .expect(200, {
@@ -78,5 +78,11 @@ describe("Scores endpoints", function() {
         machine_name: "Metallica",
         location_id: 2
       });
+  });
+
+  it(`POST /api/machines/new?machine_name=something and responds with 200`, () => {
+    return supertest(app)
+      .post(`/api/machines/new?machine_name=something`)
+      .expect(200);
   });
 });
