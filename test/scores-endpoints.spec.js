@@ -37,20 +37,44 @@ describe("Scores endpoints", function() {
     const machine_id = 1;
     const pinball_user_id = 1;
     const score_value = 23424;
+    return (
+      supertest(app)
+        .post(
+          `/api/scores/machine/1?machine_id=${machine_id}&pinballer_user_id=${pinball_user_id}&score_value=${score_value}`
+        )
+        //commented out below because score_date doesn't understnad the now() function
+        // .expect(201,
+        //   {
+        //   score_id: 18,
+        //   score_value: 23424,
+        //   pinballer_user_id: 1,
+        //   machine_id: 1,
+        //   score_date: now()
+        // }
+        // );
+        .expect(201)
+    );
+  });
+
+  it("GET /api/scores/user/:pinbballer_user_id responds with 200 and a list of scores for that user", () => {
     return supertest(app)
-      .post(
-        `/api/scores/machine/1?machine_id=${machine_id}&pinballer_user_id=${pinball_user_id}&score_value=${score_value}`
-      )
-      //commented out below because score_date doesn't understnad the now() function
-      // .expect(201, 
-      //   {
-      //   score_id: 18,
-      //   score_value: 23424,
-      //   pinballer_user_id: 1,
-      //   machine_id: 1,
-      //   score_date: now()
-      // }
-      // );
-    .expect(201)
+      .get(`/api/scores/user/2`)
+      .expect(200, 
+        [
+          {
+              "pinballer_user_id": 2,
+              "user_nick_name": "Matty Bombatty",
+              "score_value": 162527380,
+              "machine_id": 1,
+              "machine_name": "Mars Attacks!"
+          },
+          {
+              "pinballer_user_id": 2,
+              "user_nick_name": "Matty Bombatty",
+              "score_value": 16527380,
+              "machine_id": 3,
+              "machine_name": "Medieval Madness"
+          }
+      ] );
   });
 });

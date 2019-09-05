@@ -6,6 +6,13 @@ const MachinesService = {
       .first();
   },
 
+  postMachine(db, newMachine) {
+    return db
+      .insert(newMachine)
+      .into("pinballer_machines")
+      .returning("*")
+  },
+
   checkMachineExits(db, machine_name) {
     return db
       .from("pinballer_machines")
