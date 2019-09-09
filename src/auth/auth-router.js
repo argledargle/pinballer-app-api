@@ -41,7 +41,8 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         .then(isAdmin => {
             res.send({
                 authToken: AuthService.createJwt(sub, payload),
-                is_admin: isAdmin[0].admin_access
+                is_admin: isAdmin[0].admin_access,
+                dbUser
             });
         });
       });
