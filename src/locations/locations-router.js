@@ -13,6 +13,20 @@ locationsRouter.route("/").get((req, res, next) => {
     .catch(next);
 });
 
+//here, we get data for the machines at a specific location by location_id
+locationsRouter.route("/machines").get(jsonBodyParser, (req, res, next) => {
+  const { location_id } = req.body;
+  if (!req.body)
+    return res.status(400).json({
+      error: `No location ID found.`
+    });
+  LocationsService.getMachinesForLocation(req.app.get("db"), location_id)
+    .then(machines => {
+      res.json(machines);
+    })
+    .catch(next);
+});
+
 //this adds new locations
 locationsRouter.post("/", jsonBodyParser, (req, res, next) => {
   const { location_name, location_address } = req.body;

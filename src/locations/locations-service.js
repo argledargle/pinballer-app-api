@@ -8,6 +8,18 @@ const LocationsService = {
       .orderBy("location_name");
   },
 
+  getMachinesForLocation(db, location_id) {
+    return db
+      .select("*")
+      .from("pinballer_locations")
+      .where("pinballer_locations.location_id", location_id)
+      .leftJoin(
+        "pinballer_machines",
+        "pinballer_machines.location_id",
+        "pinballer_locations.location_id"
+      );
+  },
+
   getById(db, location_id) {
     return db
       .from("pinballer_locations")
