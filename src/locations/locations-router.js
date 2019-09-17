@@ -16,15 +16,13 @@ locationsRouter.route("/").get((req, res, next) => {
 //here, we get data for the machines at a specific location by location_id
 locationsRouter.route("/machines/:location_id").get((req, res, next) => {
   const { location_id } = req.params;
-  console.log('location_id', location_id)
   if (!req.params)
     return res.status(400).json({
       error: `No location ID found.`
     });
   LocationsService.getMachinesForLocation(req.app.get("db"), location_id)
     .then(machines => {
-      console.log(location_id)
-      console.log(machines)
+
       res.json(machines);
     })
     .catch(next);
