@@ -15,7 +15,7 @@ locationsRouter.route("/").get((req, res, next) => {
 
 //here, we get data for the machines at a specific location by location_id
 locationsRouter.route("/machines").get(jsonBodyParser, (req, res, next) => {
-  const { location_id } = req.query;
+  const { location_id } = req.params;
   if (!req.body)
     return res.status(400).json({
       error: `No location ID found.`
