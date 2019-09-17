@@ -55,6 +55,8 @@ describe("Locations Endpoints", function() {
       .expect(200, testLocations);
   });
 
+  //TODO: write test for GET /api/locations/machines endpoint
+
   it("POST /api/locations responds with 200 and shows the location", () => {
     return supertest(app)
       .post("/api/locations")
